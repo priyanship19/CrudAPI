@@ -1,0 +1,27 @@
+{
+  "name": "crudapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.1",
+    "mongodb": "^3.0.2",
+    "mongodb-autoincrement": "^1.0.1",
+    "mongoose": "^5.0.0-rc1",
+    "node-schema": "^2.2.0",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
+    "passport-google-token": "^0.1.2",
+    "passport-local": "^1.0.0",
+    "passport-oauth": "^1.0.0"
+  }
+}
