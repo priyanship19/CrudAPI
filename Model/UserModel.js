@@ -1,14 +1,18 @@
-var mongoose = require('mongoose');
-mongoose.Promise= global.Promise;
-mongoose.connect("mongodb://localhost:27017/Users");
-let user = mongoose.model('Users',{
+/*
+var mongoose = require('../Db/Db');
+var Schema = mongoose.Schema;
+
+var userSchema = new Schema({
+
     email:{
         type:String,
     },
     password:{
-      type:String,
+        type:String,
     }
+
+
 });
-module.exports={
-    user
-};
+var user = mongoose.model('user',userSchema);
+module.exports = {user};
+*/

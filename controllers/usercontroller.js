@@ -1,24 +1,24 @@
-'use strict';
-
-var mongoose = require('mongoose');
+var mongoose = require('./../Db/Db');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 //var Detail = mongoose.model('Detail');
-var Detail= require('../Model/UserDetail');
+var Detail= require('./../Model/UserDetail');
 
 
 
 exports.register = function(req, res) {
     var newUser = new Detail(req.body);
+    console.log(req.body.password);
     newUser.password = bcrypt.hashSync(req.body.password, 10);
+
     newUser.save(function(err, user) {
         if (err) {
 
-                return res.json("Failed" + err);
+                return res.status(404).json("Failed" + err);
 
         } else {
-            user.password = undefined;
-            return res.json("success");
+            //user.password = undefined;
+            return res.status(200).json("success");
         }
     });
 };

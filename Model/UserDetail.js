@@ -1,6 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('./../Db/Db');
 mongoose.Promise= global.Promise;
-mongoose.connect("mongodb://localhost:27017/Detail");
 var bcrypt = require('bcrypt');
 var Schema = mongoose.Schema;
 

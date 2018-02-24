@@ -1,7 +1,8 @@
 var express = require('express');
-var mongoose = require('mongoose');
+var mongoose = require('./../Db/Db')
 var bodyparser = require('body-parser') ;
-//var {user} = require('../Model/UserModel');
+/*var {user} = require('../Model/UserModel');*/
+var FileUpload = require('express-fileupload');
 //var {employee} = require('../Model/EmployeeModel');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -17,8 +18,9 @@ var route = require('../router/route');
 //var port = process.env.PORT || 3000;
 
 
-
+global.Token = "1"
 var app=express();
+app.use(FileUpload());
 app.use(passport.initialize());
 app.use(bodyparser.json());
 //Passport Authentication
@@ -33,15 +35,14 @@ passport.deserializeUser((user, done) => {
 
 
 
-
 app.get("/",(req,res)=>{
-    res.json({result: 'failed'});
+    res.status(404).json({result: 'failed'});
     //console.log("failed");
 });
 
 
 app.get("/success",(req,res)=>{
-    res.json({result: 'success'});
+    res.status(200).json(Token);
     //console.log('success');
 });
 
@@ -86,6 +87,7 @@ passport.use(new LocalStrategy({
                              token: token
                          }
                      }).then((usr)=>{
+                         Token  = token;
                          console.log(token);
                          return(done(null,true));
                      });
@@ -106,8 +108,10 @@ passport.use(new GoogleStrategy({
         callbackURL: "http://localhost:3000/auth/google/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        var newUser = user({email:profile.email[0].value,password:profile.displayName});
-        newUser.save().then((err,user)=>{
+
+        var newUser = user({email:profile.id,password:profile.displayName});
+        newUser.save().then((user)=>{
+            console.log(user);
             if(!user){
                 return done(null,false);
             }
@@ -116,7 +120,7 @@ passport.use(new GoogleStrategy({
     }
 ));
 app.get('/auth/google',
-    passport.authenticate('google',{ scope: 'https://www.google.com/m8/feeds' }));
+    passport.authenticate('google',{ scope: ['profile']}));
 
 app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/',successRedirect:'/success' }),
@@ -163,7 +167,7 @@ app.post('/signin',passport.authenticate('local',{
     failureRedirect:'/'
 
 
-}));
+}))
 
 
 
